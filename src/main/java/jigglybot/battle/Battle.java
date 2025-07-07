@@ -538,7 +538,11 @@ public class Battle
                     this.p1Damage = 0;
                 }
                 else
+                {
                     this.channel.queue(((UserWrapper)this.player2).name + " defeated " + this.player1.name + "!");
+                    this.ended = true;
+                    this.channel.currentBattle = null;
+                }
             }
         }
 
@@ -564,7 +568,11 @@ public class Battle
                     this.p2Participants.add(p2Mon);
                 }
                 else
+                {
                     this.channel.queue(this.player1.name + " defeated " + ((UserWrapper)this.player2).name + "!");
+                    this.ended = true;
+                    this.channel.currentBattle = null;
+                }
             }
         }
 
@@ -593,7 +601,12 @@ public class Battle
                     this.channel.queue(this.player2.getName() + " is about to use " + this.player2.getNextMonster().species.name.toUpperCase() + "!");
 
                 if (this.prevP1 == null)
-                    this.channel.queue("Whose POKéMON will JOIN next?");
+                {
+                    // Player has no more Pokemon - they lose the battle
+                    this.channel.queue(this.player2.getName() + " wins! " + this.player1.name + " has no more POKéMON!");
+                    this.channel.currentBattle = null;
+                    this.ended = true;
+                }
                 else
                 {
                     this.channel.queue("Will " + this.prevP1.getName() + " SWITCH POKéMON, or will someone else's POKéMON JOIN next?" + this.prevP1.getMonstersString(this.channel));
