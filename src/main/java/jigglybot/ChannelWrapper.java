@@ -3,7 +3,7 @@ package jigglybot;
 import discord4j.core.object.entity.Message;
 import discord4j.core.object.entity.channel.MessageChannel;
 import discord4j.core.object.reaction.ReactionEmoji;
-import discord4j.core.spec.MessageCreateSpec;
+import discord4j.core.spec.legacy.LegacyMessageCreateSpec;
 import jigglybot.battle.Battle;
 import jigglybot.location.Location;
 
@@ -21,6 +21,7 @@ public class ChannelWrapper
     public MessageChannel messageChannel;
 
     public Dialog currentDialog = null;
+    public SlashDialog currentSlashDialog = null;
     public Battle currentBattle = null;
 
     public long activeMessage = -1;
@@ -63,10 +64,10 @@ public class ChannelWrapper
             String img = s.substring(1, s.lastIndexOf("*"));
             s = s.substring(s.lastIndexOf("*") + 1);
 
-            messageChannel.createMessage(new Consumer<MessageCreateSpec>()
+            messageChannel.createMessage(new Consumer<LegacyMessageCreateSpec>()
             {
                 @Override
-                public void accept(MessageCreateSpec messageCreateSpec)
+                public void accept(LegacyMessageCreateSpec messageCreateSpec)
                 {
                     messageCreateSpec.addFile("/icon.png", getClass().getResourceAsStream(img));
                 }
