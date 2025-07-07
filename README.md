@@ -2,6 +2,9 @@
 
 A Discord Pokemon bot with modern slash commands, built using Discord4J and Java 11.
 
+> **Note:** This repository includes modern slash command implementation and Discord4J 3.2.6 migration. 
+> Based on the original JigglyBot by [aehmttw](https://github.com/aehmttw/Jigglybot).
+
 ## Features
 
 - 🎯 **Modern Slash Commands** - All commands use Discord's latest slash command system
@@ -16,7 +19,7 @@ A Discord Pokemon bot with modern slash commands, built using Discord4J and Java
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/aehmttw/Jigglybot.git
    cd Jigglybot
    ```
 

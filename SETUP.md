@@ -80,9 +80,9 @@ The run scripts automatically build if needed:
 
 ### Local Development
 
-1. **Clone the repository:**
+1. **Clone the main repository:**
    ```bash
-   git clone https://github.com/sashankbhamidi/Jigglybot.git
+   git clone https://github.com/aehmttw/Jigglybot.git
    cd Jigglybot
    ```
 
@@ -131,7 +131,7 @@ The run scripts automatically build if needed:
 
 2. **Deploy:**
    ```bash
-   git clone https://github.com/sashankbhamidi/Jigglybot.git
+   git clone https://github.com/aehmttw/Jigglybot.git
    cd Jigglybot
    cp .env.example .env
    # Edit .env
@@ -175,17 +175,20 @@ The run scripts automatically build if needed:
 
 4. **Copy the token** (keep it secret!)
 
-5. **Bot permissions needed:**
-   - Send Messages
-   - Use Slash Commands
-   - Add Reactions
-   - Read Message History
-   - Attach Files
+5. **Set bot permissions:**
+   - Go to "Installation" tab in Discord Developer Portal
+   - Under "Default Install Settings", select:
+     - Send Messages
+     - Use Slash Commands
+     - Add Reactions
+     - Read Message History
+     - Attach Files
 
-6. **Invite URL template:**
-   ```
-   https://discord.com/api/oauth2/authorize?client_id=YOUR_APP_ID&permissions=274878221312&scope=bot%20applications.commands
-   ```
+6. **Invite your bot:**
+   - Use the simplified invite URL: `https://discord.com/oauth2/authorize?client_id=YOUR_APP_ID`
+   - Replace `YOUR_APP_ID` with your actual Application ID
+   - Example: `https://discord.com/oauth2/authorize?client_id=1391433586187436135`
+   - The permissions are automatically applied from your Developer Portal settings
 
 ## Troubleshooting
 
