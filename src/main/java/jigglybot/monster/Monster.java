@@ -1,7 +1,7 @@
 package jigglybot.monster;
 
 import discord4j.common.util.Snowflake;
-import discord4j.core.spec.MessageCreateSpec;
+import discord4j.core.spec.legacy.LegacyMessageCreateSpec;
 import jigglybot.Bot;
 import jigglybot.ChannelWrapper;
 import jigglybot.ICanBattle;
@@ -479,7 +479,7 @@ public class Monster implements ICanBattle
         return s.toString();
     }
 
-    public void printStats(ChannelWrapper cw)
+    public String getStatsString()
     {
         StringBuilder s = new StringBuilder();
         s.append("No. ").append(String.format("%03d\n", this.species.id));
@@ -495,7 +495,7 @@ public class Monster implements ICanBattle
         s.append("``````TYPE1: ").append(Type.getTypeString(this.species.type1)).append("\n");
         if (this.species.type2 != this.species.type1)
             s.append("TYPE2: ").append(Type.getTypeString(this.species.type2)).append("\n");
-        s.append("OT: ").append(Bot.client.getUserById(Snowflake.of(this.originalTrainer)).getData().block().username()).append("\n");
+        s.append("OT: <Original Trainer>\n"); // Simplified for slash commands to avoid blocking API calls
         s.append("``````EXP POINTS: ").append(this.xp).append("\n");
 
         if (this.level < 100)
@@ -512,18 +512,22 @@ public class Monster implements ICanBattle
         }
 
         s.append("```");
+        return s.toString();
+    }
 
-        cw.messageChannel.createMessage(new Consumer<MessageCreateSpec>()
+    public void printStats(ChannelWrapper cw)
+    {
+        cw.messageChannel.createMessage(new Consumer<LegacyMessageCreateSpec>()
         {
             @Override
-            public void accept(MessageCreateSpec messageCreateSpec)
+            public void accept(LegacyMessageCreateSpec messageCreateSpec)
             {
                 messageCreateSpec.addFile("/icon.png", getClass().getResourceAsStream(("/front/" + species.name.toUpperCase())
                         .replace("♂", "m").replace("♀", "f").replace("'", "").toLowerCase() + ".png"));
             }
         }).block();
 
-        cw.messageChannel.createMessage(s.toString()).block();
+        cw.messageChannel.createMessage(getStatsString()).block();
     }
 
     public boolean isShiny()
