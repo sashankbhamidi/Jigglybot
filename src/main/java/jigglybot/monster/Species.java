@@ -1,6 +1,6 @@
 package jigglybot.monster;
 
-import discord4j.core.spec.MessageCreateSpec;
+import discord4j.core.spec.legacy.LegacyMessageCreateSpec;
 import jigglybot.ChannelWrapper;
 import jigglybot.UserWrapper;
 import jigglybot.battle.action.Move;
@@ -139,10 +139,10 @@ public class Species
 
         if (!queue)
         {
-            c.messageChannel.createMessage(new Consumer<MessageCreateSpec>()
+            c.messageChannel.createMessage(new Consumer<LegacyMessageCreateSpec>()
             {
                 @Override
-                public void accept(MessageCreateSpec messageCreateSpec)
+                public void accept(LegacyMessageCreateSpec messageCreateSpec)
                 {
                     messageCreateSpec.addFile("/icon.png", getClass().getResourceAsStream(img));
                 }
