@@ -71,6 +71,58 @@ public class UserWrapper implements ICanBattle
         c.currentDialog.execute();
     }
 
+    public void pickStarterAsync(ChannelWrapper c, Species s)
+    {
+        this.initialized = true;
+        Monster m = new Monster(s, 5);
+        m.setOwner(this);
+        
+        // Set a proper name (Pokemon names are usually uppercase in this game)
+        m.name = s.name.toUpperCase();
+        
+        // Add to squad
+        this.squad[0] = m;
+        
+        // Save the game
+        this.save();
+    }
+
+    public void reset()
+    {
+        // Clear all Pokemon
+        for (int i = 0; i < this.squad.length; i++) {
+            this.squad[i] = null;
+        }
+        this.storage.clear();
+        
+        // Reset progress
+        this.initialized = false;
+        this.inBattle = false;
+        this.page = 0;
+        
+        // Clear Pokedex
+        for (int i = 0; i < this.dex.length; i++) {
+            this.dex[i] = 0;
+        }
+        
+        // Reset starter visibility in Pokedex
+        this.dex[Species.by_name.get("bulbasaur").id] = 1;
+        this.dex[Species.by_name.get("charmander").id] = 1;
+        this.dex[Species.by_name.get("squirtle").id] = 1;
+        this.dex[Species.by_name.get("pikachu").id] = 1;
+        
+        // Clear items
+        this.items.clear();
+        
+        // Save the reset state
+        this.save();
+        
+        // Also delete the save file for a complete reset
+        if (this.getFile().exists()) {
+            this.getFile().delete();
+        }
+    }
+
     @Override
     public Monster getNextMonster()
     {
@@ -125,6 +177,15 @@ public class UserWrapper implements ICanBattle
         try
         {
             File f = this.getFile();
+            
+            // Ensure the parent directory exists
+            File parentDir = f.getParentFile();
+            if (parentDir != null && !parentDir.exists()) {
+                boolean created = parentDir.mkdirs();
+                if (!created) {
+                    System.err.println("Warning: Failed to create userdata directory: " + parentDir.getAbsolutePath());
+                }
+            }
 
             if (!f.exists())
                 f.createNewFile();
